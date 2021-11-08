@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
+    <link type="text/css" rel="stylesheet" href="../styles/layout.css">
+    <script type="text/javascript" src="../scripts/index.js"></script>
+    <title>Book of Mormon Text Bubble Charts</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/treemap.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Speakers of the Book of Mormon: Words by Frequency</h1>
+        </div>
+        <div class="graph" , id="graph-container" style="height: 900px;width: 1700px;"></div>
+    
+        <script>
+            Highcharts.chart('graph-container', {
+                chart: {
+                    height: '900',
+                    width: '1700'
+                },
+                series: [{
+                    type: "treemap",
+                    allowDrillToNode: true,
+                    alternateStartingDirection: true,
+                    levels: [{
+                        level: 1,
+                        layoutAlgorithm: 'sliceanddice',
+                        dataLabels: {
+                            enabled: true,
+                            align: 'left',
+                            verticalAlign: 'top',
+                            style: {
+                                color: 'white',
+                                textOutline: 'none',
+                                fontWeight: 'normal',
+                                fontSize: 18
+                            }
+                        }
+                    }, {
+                        level: 2,
+                        layoutAlgorithm: 'squarified',
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }, {
+                        level: 3,
+                        layoutAlgorithm: 'sliceanddice',
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }],
+                    data: [{
+                        id: 'A',
+                        name: 'Content Words',
+                        color: "#0017b0"
+                    }, {
+                        id: 'B',
+                        name: 'Function Words',
+                        color: "#850000"
+                    }, {
+                        id: 'Nouns',
+                        name: 'Nouns',
+                        color: '#fc0303',
+                        parent: 'A'
+                    }, {
+                        id: 'Verbs',
+                        color: '#0007cc',
+                        name: 'Verbs',
+                        parent: 'A'
+                    },{
+                        id: 'Adjectives',
+                        color: '#cc00c2',
+                        name: 'Adjectives',
+                        parent: 'A'
+                    }, {
+                        id: 'Adverbs',
+                        color: '#097000',
+                        name: 'Adverbs',
+                        parent: 'A'
+                    }, {
+                        id: 'Prepositions',
+                        color: '#c29500',
+                        name: 'Prepositions',
+                        parent: 'B'
+                    },{
+                        id: 'Conjunctions',
+                        color: '#0de0af',
+                        name: 'Conjunctions',
+                        parent: 'B'
+                    }, {
+                        id: 'Articles',
+                        color: '#9205eb',
+                        name: 'Articles',
+                        parent: 'B'
+                    }, getData()
+                    ]
+                }],
+                title: {
+                    text: 'Tree map test'
+                }
+            });
+    function getData() {
+
+    let url = "./json/treechartdata.txt";
+    var textData;
+    let request = new XMLHttpRequest();
+    request.open('GET', url, false);
+    request.onload = function() {
+        if (request.readyState === 4) {
+
+            //Split CSV files by lines
+            textData = request.response;
+        }
+        req.send(null)
+       
+    }
+    console.log(textData);
+    return textData;
+}
+        </script>
+        
+        <div class="sidebar" style="top: 20px">
+            <div class="list">
+                <ul id="parent-list">
+                    <li id="nephi1">Nephi, son of Lehi</li>
+                    <li id="lehi">Lehi</li>
+                    <li id="Zeniff">Zeniff</li>
+                    <li id="Jacob">Jacob</li>
+                    <li id="Enos">Enos</li>
+                    <li id="Jarom">Jarom</li>
+                    <li id="Laman & Lemuel">Laman & Lemuel</li>
+                    <li id="King Benjamin">King Benjamin</li>
+                    <li id="Limhi">Limhi</li>
+                    <li id="Amaleki">Amaleki</li>
+                    <li id="Anti-Nephi-Lehis">Anti-Nephi-Lehi</li>
+                    <li id="Mosiah">Mosiah</li>
+                    <li id="Abinadi">Abinadi</li>
+                    <li id="Lamoni's Father">Lamoni's Father</li>
+                    <li id="Alma">Alma</li>
+                    <li id="Alma the Younger">Alma the Younger</li>
+                    <li id="Amulek">Amulek</li>
+                    <li id="Ammon">Ammon</li>
+                    <li id="Lamoni">Lamoni</li>
+                    <li id="Korihor">Korihor</li>
+                    <li id="Giddanhi">Giddanhi</li>
+                    <li id="Captain Moroni">Captain Moroni</li>
+                    <li id="Pahoran">Pahoran</li>
+                    <li id="Helaman">Helaman</li>
+                    <li id="Nephi, son of Helaman">Nephi, son of Helaman</li>
+                    <li id="Samuel">Samuel</li>
+                    <li id="Mormon">Mormon</li>
+                    <li id="Moroni, son of Mormon">Moroni, son of Mormon</li>
+                </ul>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            // locate your element and add the Click Event Listener
+            document.getElementById("parent-list").addEventListener("click",function(e) {
+                // e.target is our targetted element.
+                            // try doing console.log(e.target.nodeName), it will result LI
+                if(e.target && e.target.nodeName == "LI") {
+                    console.log(e.target.id + " was clicked");
+                    highlightSide(e);
+                }
+            });
+        </script>
+
+        <div class="help">
+            <button type="button" onClick="window.open('help_tree.html','Packed Bubbles Help','resizable,height=360,width=500'); return false;" id="help_button">Help</button>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

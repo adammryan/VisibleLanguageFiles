@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie-edge">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link type="text/css" rel="stylesheet" href="/../styles/packedbubbles.css">
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        
+        <title>Book of Mormon Word Cloud</title>
+    </head>
+    <body>
+        <div class="page">
+            <!-- Create Color schemes for all categories - svg requires this as an html element to refer to as fill -->
+            <svg xmlns="http://www.w3.org/2000/svg" height='0' width='0' class='no-height'>
+                <defs>
+                    <radialGradient id="fill1">
+                        <stop offset="0%" stop-color="rgb(255, 187, 130)" />
+                        <stop offset="80%" stop-color="rgb(238, 119, 51)" />
+                        <stop offset="100%" stop-color="rgb(204, 100, 37)" />
+                    </radialGradient>
+                    <radialGradient id="fill2">
+                        <stop offset="0%" stop-color="rgb(201, 224, 235)" />
+                        <stop offset="80%" stop-color="rgb(136, 204, 238)" />
+                        <stop offset="100%" stop-color="rgb(109, 179, 211)" />
+                    </radialGradient>
+                    <radialGradient id="fill3">
+                        <stop offset="0%" stop-color="rgb(240, 240, 240)" />
+                        <stop offset="80%" stop-color="rgb(187, 187, 187)" />
+                        <stop offset="100%" stop-color="rgb(172, 172, 172)" />
+                    </radialGradient>
+                    <radialGradient id="fill4">
+                        <stop offset="0%" stop-color="rgb(134, 216, 202)" />
+                        <stop offset="80%" stop-color="rgb(68, 170, 153)" />
+                        <stop offset="100%" stop-color="rgb(66, 137, 126)" />
+                    </radialGradient>
+                    <radialGradient id="fill5">
+                        <stop offset="0%" stop-color="rgb(255, 213, 213)" />
+                        <stop offset="80%" stop-color="rgb(247, 175, 175)" />
+                        <stop offset="100%" stop-color="rgb(252, 152, 152)" />
+                    </radialGradient>
+                    <radialGradient id="fill6">
+                        <stop offset="0%" stop-color="rgb(195, 241, 193)" />
+                        <stop offset="80%" stop-color="rgb(152, 220, 148)" />
+                        <stop offset="100%" stop-color="rgb(123, 208, 120)" />
+                    </radialGradient>
+                    <radialGradient id="fill7">
+                        <stop offset="0%" stop-color="white" />
+                        <stop offset="80%" stop-color="rgb(250, 250, 250)" />
+                        <stop offset="100%" stop-color="rgb(235, 235, 235)" />
+                    </radialGradient>
+                    <radialGradient id="fill8">
+                        <stop offset="0%" stop-color="rgb(252, 238, 182)" />
+                        <stop offset="80%" stop-color="rgb(238, 204, 102)" />
+                        <stop offset="100%" stop-color="rgb(216, 180, 72)" />
+                    </radialGradient>
+                    <radialGradient id="fill9">
+                        <stop offset="0%" stop-color="rgb(255, 255, 255)" />
+                        <stop offset="80%" stop-color="lightgray" />
+                        <stop offset="100%" stop-color="rgb(181, 181, 181)" />
+                    </radialGradient>
+                    <radialGradient id="fill10">
+                        <stop offset="0%" stop-color="rgb(235, 198, 165)" />
+                        <stop offset="80%" stop-color="rgb(195, 155, 119)" />
+                        <stop offset="100%" stop-color="rgb(179, 130, 83)" />
+                    </radialGradient>
+                </defs>
+            </svg>
+            <div class="header">
+                <div class='copyright'>© Copyright 2021 Visiblelanguage</div>
+                <h1>Word Cloud - Displaying Words by Frequency</h1>
+                <div class="main-description-container">
+                    <div class="main-description">The Word Cloud Chart displays language used by a specific Book of Mormon speaker. You can apply filters to see certain words that this speaker uses. Narrow your search through lenses like theme, part of speech, or frequency.</div>
+                    </div>
+                
+                <div class="controls">
+                    <div class="buttons">
+                        <div class="button control-button" onclick="loadNewChart('content')">
+                            <div class='title'>Content Word Cloud</div>
+                            <div class="description">Content words include nouns and verbs that demonstrate which topics this speaker might focus on.</div>
+                        </div>
+                        <div class="button control-button" onclick="loadNewChart('function')">
+                            <div class='title'>Function Word Cloud</div>
+                            <div class="description"><em>The, and, which, unto, etc.</em> - these words and many more of its kind indicate a voices' speaking style.</div>
+                        </div>
+                        <div class="button control-button" onclick="loadNewChart('theme')">
+                            <div class='title'>Theme Word Cloud</div>
+                            <div class="description">Categorize words by sacred or non-sacred. This can help identify religious themes for a speaker.</div>
+                        </div>        
+                    </div>
+                    <div class='user-options'>
+                        <select id='dropdown' class="author-select" onchange="loadNewDataset(this.value)">
+                            <option disabled selected value> -- Select a speaker -- </option>
+                        </select>
+                        <button class="button help-button" onClick="window.open('help_bubbles.html','Packed Bubbles Help','resizable,height=360,width=600'); return false;" id="help_button">More help</button>
+                    </div>
+                    
+                </div>
+            </div>
+            
+                
+            
+
+            <div class="graph graph--zero-state" id="graph-container">
+                <div class="graph-tools-bar">
+                    <div class="graph-speaker-container">
+                        <div class="graph-speaker-image">
+                            <img id="speaker-image" src="" alt="No image" width="100%">
+                        </div>
+                        <span class="graph-title" id="graph-title" style="text-align: center;">
+                            Select a chart type to begin
+                        </span>
+                    </div>
+                    <div class="graph-info">
+                        <div class="graph-stats-container graph-info-item">
+                            <div class="graph-info-title">Speaker statistics</div>
+                            <div class="graph-stats">
+                                <div class="graph-stat">
+                                    <div class='graph-info-subtitle'><em>--- Total number of words ---</em></div>
+                                    <div id="stat-1"></div>
+                                </div>
+                                <div class="graph-stat" >
+                                    <div class='graph-info-subtitle'><em>--- Percentage of Book of Mormon ---</em></div>
+                                    <div class="description">How much of the Book of Mormon consists of words spoken by this speaker?</div>
+                                    <div id="stat-2"></div>
+                                </div>
+                                <div class="graph-stat" >
+                                    <div class='graph-info-subtitle'><em>--- Rank out of all Speakers ---</em></div>
+                                    <div class="description">How does this speaker compare in word count with other voices in the Book of Mormon? (Out of 80+ distinct speakers)</div>
+                                    <div id="stat-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="user-input graph-info-item">
+                            <div id="check-animate" class='animate-on' onclick='toggleAnimate()'>
+                                <div class="animate-text-on">Animate On</div>
+                                <div class="animate-text-off">Animate Off</div>
+                            </div>
+                            <div class="graph-info-title">Filter Chart</div>
+                            <form onsubmit="goButton(event);" class="user-input__form user-parameters">
+                                
+                                <div class="range-select-container filter-item">
+                                    <div class="start-range graph-info-subtitle"><em>--- Range ---</em></div>
+                                    <div class='range-type' id='range-type'>
+                                        <div id='range-rank' class='range-select-item range-selected'>Priority/Rank</div>
+                                        <div id='range-frequency' class='range-select-item'>Frequency</div>
+                                    </div>
+                                    <div id='range-description'></div>
+                                    <div id="range-max">Number of Unique Words - </div>
+                                    <div class="range-select">
+                                        <div class="user-input__form-group">
+                                            <label class="label range-words-label" for="wordmin"></label>
+                                            <input type="number" min="0" max="10000" id="wordmin" name="wordmin" value='0' required>
+                                        </div>
+                                        <div class="user-input__form-group end-range">
+                                            <label class="label num-words-label" for="wordmax">to</label>
+                                            <input type="number" min="0" max="10000" id="wordmax" name="wordmax" value='100' required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="user-input__form-group filter-type filter-item">
+                                    <label class="label display-options-label graph-info-subtitle" for="wordparts"><em>--- Groups Displayed ---</em></label>
+                                    <!-- <select class="wordparts-select" name="wordparts" id="wordparts" required></select> -->
+                                    <div id="group-select-box" class="group-select-container">
+                                        <!-- This will be populated with types of words, like "Nouns"(POS) or "War"(themes) -->
+                                    </div>
+                                </div>
+                                <div class="filter-item">
+                                    <div class='graph-info-subtitle'><em>--- Unique Words ---</em></div>
+                                    <div class='unique-button unique-off' id='unique-button' onclick='updateUnique()'>Off</div>
+                                </div>
+                                <button id='go-button' class="go-button" type="submit">Go</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="graph-display" id="graph-display"></div>
+                <div class="graph-legend" id="graph-legend"></div>
+            </div>
+        </div>
+
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script type="text/javascript" src="/../scripts/utilities.js"></script>
+        <script type="text/javascript" src="/../scripts/import_data.js"></script>
+        <script type="text/javascript" src="/../scripts/main.js"></script>
+        <script type="text/javascript" src="/../scripts/draw_graphs.js"></script>
+        <script type="text/javascript" src="/../scripts/index.js"></script>
+
+        <!-- changed PackedBubble to .. for local development -->
+    </body>
+</html>

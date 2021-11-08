@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+    <title>Book of Mormon Tree Chart Help Page</title>
+    <meta author="Greg Knapp">
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div>
+        <section>
+            <h2>Book of Mormon Tree Chart Help Page</h2>
+
+            <h3>Getting Started</h3>
+           <p>The Book of Mormon Tree graph is divided into three layers which can be navigated by the user</p>
+           <p>The three layers are as follows from most general to specific: <br><br>
+            - Word Type: The entirety of the data set is on display, with highlight colors distinguishing the function words from content words. This provides a 
+            large scale overview of the prominence of function vs. content words for the current data set.<br><br>
+            - Part of Speech: Within each set of either content or function words, the next layer breaks down either set by part of speech. This gives a better picture what exact type 
+            of words are most common within the data set, giving a more detailed picture.<br><br>
+            - Individual Words: Within each break down of a set of part of speech words, individual words can be selected and explored. Hovering individual words will give the frequency value and 
+        other details of interest. This is the most specific layer of the chart.</p>
+            <br>
+            
+            <h3>Changing Datasets</h3>
+            <p>
+                Each Bubble Chart is created from data for a single speaker from the Book of Mormon text. The sidebar on the right contains the name of 
+                each speaker. In order to view the charts for a specific person, the user can click on the name and the graphs will automatically be redrawn.
+                The currently selected dataset/speaker will be highlighted in bold text for clarity.
+            </p>
+            <h3>Chart Interaction</h3>
+            <p>While viewing the chart, has a few options for interacting with the graph. If a section of the chart is hovered with the cursor, the exact 
+                frequency value of the word (how many times it appears in the text) will be displayed. <br><br>
+                If a section is clicked, the graph will "drill-down" on the selected section, redrawing itself to fill the chart display area with only 
+                the selected data. (Ex. If the 'Content Word' half of the chart is selected from the inital display, the function words half will vanish and 
+                the content word half will expand and reveal the breakdown by part of speech.)
+            </p>
+        </section> 
+    </div>
+</body>
+
+<!--- 
+    <h3>Filter Controls</h3>
+            <p>The drop down menu and text entry field to the left of the chart type buttons are the filter controls<br>
+            <br>There are two options for filtering the data set.</p>
+            <p>1) Filter by number of words: Parse the list down to a limited number of entries to make a larger data set smaller.
+                The user can enter an integer greater than 0 into the text field and select the go button, and the current chart will be re-drawn with the number of bubbles selected.
+                If a number that is greater than the total bubbles in the data set or less than or equal to 0 is entered, the full data set will be displayed<br>
+                Note: Filtering is done from largest to smallest. If 2 bubbles are selected from a total data set of 10, the two with the highest frequency values will be displayed.
+                <br><br>
+                2) Filtering by part of speech: Within each graph type, a single part of speech (noun, verb, etc.) can be isolated and drawn as a graph.
+                The user simply needs to select a part of speech from the drop down menu and select the go button and the graph will be redrawn showing only words of that part of speech.
+                Note: Given the graphs are divided into content and function words, if a part of speech that is not present in the current graph is selected, there will be no effect on the graph. 
+                (Ex. If filtering to display only nouns is selected while the function words are displayed, no change will occur. When the content graph is opened again, the filter will be applied.)
+            </p>
+-->

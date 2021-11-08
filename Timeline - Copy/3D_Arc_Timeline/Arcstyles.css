@@ -1,0 +1,79 @@
+.svg-container {
+    align-self: center;
+}
+
+svg {
+    margin: 0px;
+}
+
+
+
+
+/* Styles for the connections tool */
+
+#connections-container {
+    display: block;
+    /* background-color: lightpink; */
+}
+.connections-svg {
+    /* border: solid 1px rgb(43, 255, 0); */
+    /* background-color:rgb(177, 177, 231); */
+    margin-bottom: 0px;
+}
+
+.speaker-box {
+    height: 20px;
+    border: solid 1px black;
+}
+/* 
+.speaker-circle {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border-radius: 40px;
+    background-color: rgb(164, 76, 76);
+    border: solid 2px white;
+    transition: transform ease-out 300ms, opacity 250ms;
+} */
+
+.speakers-svg {
+    background-color:rgb(231, 177, 177);
+    transform: translateY(-4px);
+}
+
+.speaker-circle {
+    stroke-width: 2px;
+    stroke: white;
+    cursor: pointer;
+    transition: transform ease-out 300ms, opacity 250ms;
+}
+
+/* .highlight {
+} */
+.highlight-circle {
+    fill: blue;
+    stroke: white;
+}
+.highlight-line {
+    stroke: blue;
+    stroke-width: 3px;
+    fill: none;
+}
+
+.line {
+    stroke-width: 1px; 
+    stroke: rgb(95, 95, 95, .5);
+    fill: none;
+
+    animation: draw 4000ms forwards;
+}
+
+.cx-name {
+    font-size: 13px;
+}
+
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}

@@ -1,0 +1,25 @@
+{"speakers": [
+    {
+        "name": "nephi1",
+        "incoming": [
+            {"name": "lehi", "type": ["family", "language"]},
+            {"name": "brother-of-jared", "type": ["language"]}
+        ],
+        "outgoing": [
+            {"name": "jacob", "type": ["language", "family"]},
+            {"name": "enos", "type": ["language", "family"]}
+        ],
+        "lifespan": {"start": "600 BC", "end": "520 BC"},
+        "events": [
+            {"name": "Leaving Jerusalem", "start": "585 BC", "end": "585 BC"},
+            {"name": "Gets sword of Laban", "start": "586 BC", "end": "586 BC"},
+            {"name": "Crosses the sea", "start": "580 BC", "end": "581 BC"}
+        ]
+    },
+
+    {"otherExample": "Mosiah"},
+    
+    {"otherExample": "Helaman"},
+    
+    {"otherExample": "Mormon"}
+]}

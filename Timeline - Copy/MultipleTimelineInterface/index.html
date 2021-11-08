@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Timeline - Staircase & Networks</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class='nav-bar'>
+            <!-- <button onclick="toggleExtendOne()">Swap Extend Option</button> -->
+            <div class='title'>Visible Lanuage - Timeline</div>
+            <div class='top-button type-button' onclick='populateTimeline()'>Create Graph</div>
+            <div class='top-button type-button type-button-active' id='type-button-str' onclick='changeGraphType("staircase")'>Staircase</div>
+            <div class='top-button type-button' id='type-button-cir'onclick='changeGraphType("circular")'>Circular</div>
+            <div class='top-button type-button' id='type-button-cir-even'onclick='changeGraphType("circ-even")'>Circular (Evenly Spaced)</div>
+            <!-- <div class='type-button' onclick='changeGraphType("other")'>Other</div> -->
+            <div class='top-button ring-button' id='ring-button' onclick='changeRingLayers()'>Rings/Layers</div>
+            <div class='top-button' id='popup-button' onclick='changePopupSetting()'>Popup</div>
+            <div class='top-button' id='lines-button' onclick='changeLinesSetting()'>Lines (Refresh for no lines)</div>
+        </div>
+        <div class='content-container'>
+            <div class='content-box'>
+                <svg class='svg-box' id='svg-box' viewBox='-500 -500 1000 1000' preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' >
+                    <!-- <circle cx='-500' cy='-500' r='20' class='svg-circle'></circle>
+                    <circle cx='500' cy='-500' r='20' class='svg-circle'></circle>
+                    <circle cx='-500' cy='500' r='20' class='svg-circle'></circle>
+                    <circle cx='500' cy='500' r='20' class='svg-circle'></circle> -->
+
+                    <circle cx='0' cy='-200' r='250' fill='none' stroke='rgba(0, 0, 0, 0.144)' stroke-width='1px'></circle>
+                    
+                    <!-- OT -->
+                    <!-- <rect x="-500" y='-500' width="600" height="600"/> -->
+
+                    <!-- Standard BOM -->
+                    <!-- <rect x="-10" y='-450' width="550" height="550" /> -->
+
+                    <!-- Nephi to Benjamin -->
+                    <!-- <rect x="-10" y='-430' width="320" height="320" /> -->
+                    
+                    <!-- Benjamin to Moroni -->
+                    <!-- <rect x="220" y='-350' width="320" height="320" /> -->
+
+                    <!-- <path class='line' d='M 0 0 L 20 20'></path> -->
+                    
+                </svg> 
+                <!-- SVG will take up the whole space -->
+                <div class='p-boxes' id='p-boxes'>
+                    <!-- <div class='test-box' style='--height: 200px; --width: 150px; --top: 20px; --left: 20px;'></div> -->
+                </div>
+                <div class='zoom-helps hidden' id='zoom-helps' style='--z-index: 1;'></div>
+                <!-- Maybe I will move this to settings, but it might fit better on the content section -->
+                
+                <div id='spotlight-hint'>Drag to the side bar to learn more about this speaker!</div>
+                <div class="tooltip hidden" id="tooltip">Tooltip</div>
+            </div>
+            <div class='sidebar-container' id='sidebar-container'>
+                <div class='sidebar'>
+                    <div class='title'>Info</div>
+                    <div class="action-bar">
+                        <div class='action' onclick="addBox()">Add Box</div>
+                        <div class='action' onclick='clearAllPBoxes()'>Clear All</div>
+                        <div class='action' onclick='minimizeAllPBoxes("false")'>Minimize All</div>
+                        <div class='action' onclick='arrangeLeft()'>Arrange Left</div>
+                    </div>
+                    <div class='subtitle'>Active Boxes</div>
+                    <div class='content' id='active-speakers'></div>
+
+                    <div class='subtitle'>Snap</div>
+                    <div class='action-bar'>
+                        <div class='action' onclick="snapSVGView('O')">OT</div>
+                        <div class='action' onclick="snapSVGView('S')">Standard BOM</div>
+                        <div class='action' onclick="snapSVGView('N')">Nephi - Benjamin</div>
+                        <div class='action' onclick="snapSVGView('B')">Benjamin - Moroni</div>
+                    </div>
+                    <div class='subtitle'></div>
+                    <div class='content'></div>
+
+                    
+                </div>
+                
+                <div class='sidebar-ext-anchor'>
+                    <div class="sidebar-ext" id='sidebar-ext'>
+                        <div class="exit" onclick='collapseSpotlightPage()'>x</div>
+                        <div class='ext-content' id='ext-content'>
+                            <div class="header">
+                                <div class="image-container">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="speaker-name">Speaker</div>
+                            </div>
+                            <div class="info">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sheet hidden" id="sidebar-sheet">
+                    <img id='sheet-image' src='./images/aaron.jpg'>
+                </div>
+            </div>
+        </div>
+
+
+        <script src='main.js'></script>
+        <script src='script.js'></script>
+    </body>
+</html>

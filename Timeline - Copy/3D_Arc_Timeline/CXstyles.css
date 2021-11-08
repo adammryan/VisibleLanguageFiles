@@ -1,0 +1,185 @@
+body {
+    top: 0px;
+    left: 0px;
+    border: 0px;
+    margin: 0px;
+    /* no margin */
+    
+
+    font-family: Roboto;
+}
+
+
+.page {
+    border: solid 1px gray;
+}
+.main-tool {
+    /* min-height: 300px; */
+    width: 100%;
+    margin: 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.svg-container {
+    width: 60%;
+    margin-left: 20%;
+    align-self: center;
+}
+
+svg {
+    margin: 0px;
+}
+
+
+/* Style for button */
+.swap-button {
+    padding: 5px;
+    border: solid 1px gray;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: fit-content;
+}
+
+.swap-button:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+
+/* Styles for the timeline tool */
+
+#timeline-container {
+    display: none;
+    /* background-color: rgb(179, 221, 179); */
+    transition: transform cubic-bezier(0.5, 0.05, 0.45, 0.96) 500ms;
+}
+
+.timeline-line {
+    stroke-width: 2px; 
+    stroke: black;
+    fill: none;
+}
+
+.svg-rect {
+    fill: rgb(17, 17, 78);
+}
+
+
+
+/* Styles for the connections tool */
+
+#connections-container {
+    display: block;
+    /* background-color: lightpink; */
+}
+.connections-svg {
+    /* border: solid 1px rgb(43, 255, 0); */
+    /* background-color:rgb(177, 177, 231); */
+    margin-bottom: 0px;
+}
+
+.speakers-svg {
+    background-color:rgb(231, 177, 177);
+    transform: translateY(-4px);
+}
+
+.speaker-circle {
+    fill:rgb(164, 76, 76);
+    stroke-width: 2px;
+    stroke: white;
+    /* cursor: pointer; */
+
+    transition: transform ease-out 300ms, opacity 250ms;
+}
+
+/* .highlight {
+} */
+.highlight-circle {
+    fill: blue;
+    stroke: white;
+}
+.highlight-line {
+    stroke: blue;
+    stroke-width: 3px;
+    fill: none;
+}
+
+.line {
+    stroke-width: 1px; 
+    stroke: rgb(84, 84, 84);
+    fill: none;
+
+    animation: draw 4000ms forwards;
+}
+
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+
+.info-container {
+    height: 200px;
+    background-color: rgb(223, 236, 242);
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+
+    padding: 10px;
+}
+
+.image-container {
+    /* height: 100px; */
+    /* width: 100px; */
+    /* border: solid 1px red; */
+    width: 25%;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.info-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: solid 1px purple;
+}
+
+.info {
+    border-radius: 20px;
+    padding: 10px;
+    background-color: white;
+    margin-left: 10px;
+    width: 70%;
+}
+
+h3 {
+    margin: 5px 0px 10px 0px;
+}
+
+/* I need responsive design for mobile */
+
+@media screen and (max-width: 600px) {
+    .info-container {
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 30px;
+        box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2);
+        margin: 5px;
+    }
+    
+    .image-container {
+        width: 95%;
+    }
+    
+    .info {
+        width: 96%;
+        margin: 0px 2% 0px 2%;
+        min-height: 60px;
+    }
+}

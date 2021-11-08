@@ -1,0 +1,561 @@
+body {
+    top: 0;
+    left: 0;
+    margin: 0px;
+    font-family: Roboto;
+}
+
+:root {
+    --sidebar-width: 400px;
+    --resize-width: 20px;
+    --blue1: rgb(6, 51, 66);
+    --blue1light: rgb(16, 94, 121);
+    --primary-group: rgb(197, 89, 89);
+    --secondary-group: rgb(96, 96, 184);
+    --minimal-group: rgb(129, 209, 129);
+    --jaredite-group: rgb(252, 219, 128);
+    --OT-group: rgb(207, 100, 207);
+}
+.hidden {
+    display: none;
+}
+
+
+/*  ----------------- General Page Styles ---------------------- */
+
+.nav-bar {
+    height: 40px;
+    width: calc(100% - 10px);
+    background-color: rgb(231, 231, 231);
+    box-shadow: 0px 3px 5px gray;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+}
+.nav-bar .title {
+    margin: 5px;
+    font-size: 18px;
+}
+.top-button {
+    background-color: lightgray;
+    border-radius: 5px;
+    margin-right: 3px;
+    cursor: pointer;
+    padding: 5px;
+    height: 20px;
+    user-select: none;
+}
+.type-button {
+    /* border: solid 1px red; */
+
+}
+.type-button-active {
+    background-color: rgb(177, 177, 177);
+}
+.ring-button {
+    /* border: solid 1px red; */
+
+}
+.ring-button-active {
+    background-color: rgb(177, 177, 177);
+}
+.content-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.content-box {
+    position: relative;
+    height: 800px;
+    width: calc(100% - var(--sidebar-width));
+    /* background-color: rgb(228, 255, 230); */
+    overflow: hidden;
+}
+.img-container {
+    overflow: hidden;
+    background-color: white;
+}
+img {
+    width: 100%;
+}
+
+.svg-box rect {
+    /* fill: rgba(28, 109, 71, 0.39); */
+    fill: none;
+    stroke: rgba(0, 0, 0, 0.144);
+    stroke-width: 1px;
+}
+
+
+.tooltip {
+    position: absolute;
+    padding: 8px;
+    background-color: rgba(44, 40, 40, 0.671);
+    color: white;
+    border-radius: 8px;
+    user-select: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ----------------- Styles for SVG ------------------- */
+
+.svg-box {
+    /* border: solid 1px blue; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* height: 100%; */
+    width: 100%;
+    cursor: grab;
+}
+.svg-box:active {
+    cursor: grabbing;
+}
+
+.zoom-helps {
+    position: absolute;
+    top: 20px;
+    left: calc(100% - 100px);
+    background-color: lightgray;
+    width: 80px;
+    height: 80px;
+    /* border: solid 1px rgb(255, 0, 0); */
+    z-index: var(--z-index);
+}
+
+.svg-box .item {
+    /* fill: lightblue; */
+    cursor: pointer;
+}
+.svg-box .item:hover {
+    stroke: black;
+}
+
+.svg-box .staircase-item {
+    /* cursor: crosshair; */
+}
+
+.svg-box .line {
+    fill: none;
+    stroke: rgba(128, 128, 128, 0.432);
+    stroke-width: 1px;
+}
+.svg-box .line-highlighted {
+    stroke: rgba(128, 128, 128, 0.671);
+    stroke-width: 2px;
+}
+.svg-box .line-faded {
+    stroke: rgba(128, 128, 128, 0.2);
+    stroke-width: 1px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---------------- Styles for Popup Boxes ------------------ */
+
+.p-boxes {
+    /* border: solid 1px rgb(17, 97, 15); */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0%;
+    width: 0%;
+}
+
+.p-box {
+    position: absolute;
+    background-color:var(--blue1);
+    color: white;
+    /* border: solid 1px black; */
+    height: var(--height);
+    width: var(--width);
+    /* min-height: 80px; */
+    min-width: 150px;
+    top: var(--top);
+    left: var(--left);
+    user-select: none;
+    z-index: var(--z-index);
+    box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, .25);
+    transition: height 300ms, width 500ms, z-index 0ms;
+    border-radius: 24px;
+}
+.p-box .img-container {
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    /* border: solid black 1px; */
+}
+.p-box .title {
+    position: absolute;
+    top: 8px;
+    left: 50px;
+    height: 20px;
+    font-size: 16px;
+    width: calc(100% - 100px);
+    /* border: solid white 1px; */
+}
+.p-box .content {
+    color: black;
+    position: absolute;
+    top: 50px;
+    left: 3px;
+    width: calc(100% - 22px);
+    height: calc(100% - 69px);
+    background-color: white;
+    border-radius: 22px;
+    padding: 8px;
+}
+.resizing {
+    transition: height 0ms, width 0ms;  
+    min-height: 100px;  
+}
+.p-box-arrange {
+    transition: left 200ms, top 200ms;    
+}
+.p-box .resize {
+    position: absolute;
+    left: calc(100% - var(--resize-width));
+    top: calc(100% - var(--resize-width));
+    height: var(--resize-width);
+    width: var(--resize-width);
+    cursor: nwse-resize;
+    /* border: solid 1px red; */
+}
+
+.z-index-one {
+    z-index: 1;
+}
+
+.p-box-minimized {
+    min-height: 44px;
+    height: 44px;
+    overflow-y: hidden;
+    width: 180px;
+}
+.p-box-minimized .resize {
+    display: none;
+}
+.p-box-minimized .title {
+    position: absolute;
+    top: 8px;
+    left: 50px;
+    height: 20px;
+    font-size: 16px;
+    /* width: 100px; */
+    overflow: hidden;
+}
+
+
+.box-option {
+    position: absolute;
+    /* left: calc(100% - 18px); */
+    height: 16px;
+    width: 16px;
+    /* border: solid 1px gray; */
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition-duration: 100ms;
+}
+
+
+.minimize-box {
+    top: 10px;
+    left: calc(100% - 42px);
+}
+.minimize-box:hover {
+    background-color: var(--blue1light);
+}
+
+.exit-box {
+    top: 10px;
+    left: calc(100% - 24px);
+}
+.exit-box:hover {
+    background-color: var(--blue1light);
+}
+
+.move-box {
+    top: 2px;
+    border-radius: 40px;
+    height: 40px;
+    left: 3px;
+    cursor: move;
+    width: calc(100% - 50px);
+}
+.move-box:active {
+    cursor: move;
+}
+
+.highlight-animate {
+    /* border: solid 3px red; */
+    /* box-shadow: 0px 0px 40px 20px red; */
+    animation: flash ease-out 1000ms;
+}
+
+@keyframes flash {
+    0% {
+        background-color: var(--blue1light);
+        transform: scale(1);
+        box-shadow: 0px 0px 8px 3px rgba(0, 0, 0, .25);
+    }
+    20% {
+        background-color: var(--blue1light);
+        transform: scale(1.01);
+        box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, .25);
+    }
+    100% {
+        background-color: var(--blue1);
+        transform: scale(1);
+        box-shadow: 3px 3px 8px 3px rgba(0, 0, 0, .25);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --------------------- Styles for Sidebar Container ---------------------- */
+
+.sidebar-container {
+    position: relative;
+    width: var(--sidebar-width);
+    background-color: var(--blue1);
+    overflow-x: hidden;
+    border-left: solid 1px white;
+}
+
+.sidebar {
+    width: 94%;
+    height: 94%;
+    margin: 3%;
+    border: solid 1px rgb(242, 242, 242);
+}
+
+.sidebar .title {
+    margin: 10px;
+    /* border: solid 1px rgb(238, 238, 238); */
+    height: 30px;
+    color: white;
+    font-size: 20px;
+}
+.sidebar .subtitle {
+    margin: 10px;
+    /* border: solid 1px rgb(238, 238, 238); */
+    height: 20px;
+    color: white;
+}
+.sidebar .content {
+    margin: 10px;
+    /* border: solid 1px rgb(180, 180, 180); */
+    min-height: 20px;
+}
+
+.sidebar .action-bar {
+    /* border: solid 1px rgb(180, 180, 180); */
+    margin: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    min-height: 30px;
+}
+
+.action-bar .action {
+    height: 24px;
+    margin: 1px 5px 2px 0px;
+    padding: 4px 12px 1px 12px;
+    border-radius: 24px;
+    background-color: rgb(230, 230, 230);
+    color: black;
+    cursor: pointer;
+    user-select: none;
+    font-size: 16px;
+}
+
+
+/* Active Speaker Box */
+
+#active-speakers {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.active-speaker {
+    height: 30px;
+    padding: 2px;
+    /* width: 50px; */
+    margin: 0px 5px 5px 0px;
+    background-color: white;
+
+    /* transition: flex ease-in-out 500ms; */
+    animation: fade-in 500ms forwards;
+}
+
+/* @keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: default;
+    }
+} */
+.sidebar-ext-anchor {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 0px; width: 0px;
+}
+.sidebar-ext {
+    position: absolute;
+    top: -495px;
+    left: 0px;
+    height: 500px;
+    width: var(--sidebar-width);
+    background-color: lightcoral;
+    transition-duration: 500ms;
+}
+.sidebar-ext .exit {
+    position: absolute;
+    top: 5px;
+    left: calc(100% - 20px);
+    height: 16px;
+    width: 16px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.ext-content {
+    margin: 4px;
+    border: solid 1px black;
+}
+
+.sidebar-container .sheet {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(177, 177, 177);
+    opacity: .93;
+
+    transition-duration: 200ms;
+}
+.sidebar-container .fade-in {
+    animation: fade-in 300ms forwards;
+}
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: default;
+    }
+}
+.sidebar-container .fade-out {
+    animation: fade-out 300ms forwards;
+}
+@keyframes fade-out {
+    0% {
+        opacity: default;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.sidebar-container .hover {
+    transition-duration: 200ms;
+    opacity: 0;
+}
+.sidebar-container .hover:hover {
+    opacity: .93;
+}
+
+#sheet-image {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0)), linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: left top, left bottom;    
+}
+
+
+
+
+/* ------------------------ Styles for Spotlight ----------------------- */
+
+.spotlight-page {
+    width: 500px;
+    height: 500px;
+    margin-top: 100px;
+    text-align: center;
+    background-color: white;
+}
+
+#spotlight-hint {
+    position: absolute;
+    top: 250px;
+    /* left: calc(100% - 200px); */
+    left: 100%;
+    width: 200px;
+}
+
+.spotlight-hint-animate {
+    animation: move-left-return 4s;
+}
+@keyframes move-left-return {
+    0% {
+        left: 100%;
+    }
+    10% {
+        left: calc(100% - 200px);
+    }
+    90% {
+        left: calc(100% - 200px);
+    }
+    100% {
+        left: 100%;
+    }
+}
+

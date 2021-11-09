@@ -1,0 +1,217 @@
+<!-- This will be a webpage that takes an export .txt file from Word Cruncher and gives a graphic -->
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>Word Cruncher Post Processor</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class='nav-bar'>
+        <div class='main-title'>Word Cruncher Post Processor</div>
+        <div class='upload-bar'>
+            <div class='sub-title'>Upload a .txt file from a Word Cruncher Export</div>
+            <form id='file-upload'></form>
+                <input class='' type="file" id="myFile" name="filename" accept='.txt'>
+                <div>
+                    <input class='button' type="submit" value="Go" onclick='buttonClick()'>
+                    <button class='button' id='help-button' onclick="displayHelpBox()">Help</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+    
+    <div class='content'>
+        <div class='text-box-container'>
+            <div id='show-button' onclick='toggleShow()' class='show-button'>Show file text</div> 
+            <div id='input' class='hidden text-box'>No file selected</div>
+        </div> 
+        <div class='content-toggle-container'>
+            <div class='content-toggle' onclick='toggleContent("graphic")'>Graphic</div>
+            <div class='content-toggle' onclick='toggleContent("info")'>Info</div>
+        </div>
+        <div class='graphic-container'>
+            <div class='graphic-tools graphic-tools-display-visible' id='graphic-tools'>
+                <div class='vertical-swap' id='vertical-swap' onclick="verticalSwap()">Horizontal</div>
+                <div class='root-words-container' id='root-words-container' style="--verse_info_width:400px">
+                    <!-- <div class='root-word'>Test</div> -->
+                </div>
+                <div class='zoom-helpers visible' id='zoom-helpers' style='--verse_info_width: 400px;'>
+                    <div onclick='slideLeft()' id='pan-left' class='zoom-pan-button'>
+                        <svg class='zoom-svg-icon' viewBox='0 0 20 20' preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>
+                            <path d="M12 4 L 6 10 L 12 16" class='zoom-icon-path'></path>
+                        </svg> 
+                    </div>
+                    <div onclick='slideRight()' id='pan-right' class='zoom-pan-button'>
+                        <svg class='zoom-svg-icon' viewBox='0 0 20 20' preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>
+                            <path d="M8 4 L 14 10 L 8 16" class='zoom-icon-path'></path>
+                        </svg>
+                    </div>
+                    <div onclick='slideUp()' id='pan-up' class='zoom-pan-button'>
+                        <svg class='zoom-svg-icon' viewBox='0 0 20 20' preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>
+                            <path d="M4 12 L 10 6 L 16 12" class='zoom-icon-path'></path>
+                        </svg>
+                    </div>
+                    <div onclick='slideDown()' id='pan-down' class='zoom-pan-button'>
+                        <svg class='zoom-svg-icon' viewBox='0 0 20 20' preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>
+                            <path d="M4 8 L 10 14 L 16 8" class='zoom-icon-path'></path>
+                        </svg>
+                    </div>
+                    <div onclick='zoomIn()' id='zoom-in' class='zoom-pan-button'>
+                        <svg class='zoom-svg-icon' viewBox='0 0 20 20' preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>
+                            <path d="M10 3 L 10 17" class='zoom-icon-path'></path>
+                            <path d="M3 10 L 17 10" class='zoom-icon-path'></path>
+                        </svg>
+                    </div>
+                    <div onclick='zoomOut()' id='zoom-out' class='zoom-pan-button'>
+                        <svg class='zoom-svg-icon' viewBox='0 0 20 20' preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>
+                            <path d="M3 10 L 17 10" class='zoom-icon-path'></path>
+                        </svg>
+                    </div>
+                    <div onclick='zoomInSmall()' id='zoom-in-small' class='zoom-pan-button'>
+                        <svg class='zoom-svg-icon' viewBox='0 0 20 20' preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>
+                            <path d="M10 7 L 10 13" class='zoom-icon-path'></path>
+                            <path d="M7 10 L 13 10" class='zoom-icon-path'></path>
+                        </svg>
+                    </div>
+                    <div onclick='zoomOutSmall()' id='zoom-out-small' class='zoom-pan-button'>
+                        <svg class='zoom-svg-icon' viewBox='0 0 20 20' preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>
+                            <path d="M6 10 L 14 10" class='zoom-icon-path'></path>
+                        </svg>
+                    </div>
+                </div>
+                <div id='zoom-show' class='zoom-show' onclick="showZoom()" style='--zoom_box_width: 40px; --verse_info_width: 400px;'>Hide</div>         
+                <svg class='svg-box' id='svg-box' viewBox='-800 -100 1600 800' style="--verse_info_width:400px" preserveAspectRation='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'>
+                    <circle cx='0' cy='0' r='10' class='svg-circle'></circle>
+                </svg> 
+            </div>
+            <div class='verse-info verse-info-display-hidden' id='verse-info' style="--verse_info_width:400px">
+                <div id='sidebar-container' class='sidebar-container hidden'>
+                    <div id='hit-count-large' class='hit-count-large'></div>
+                    <div id='hit-count' class='hit-count'></div>
+
+                    <div id='verse-speaker-switch' class='verse-speaker-switch'>
+                        <div id='verse-box-title' class='switch-item switch-selected' onclick="toggleVerseSpeakerSwitch('verse')">Verses</div>
+                        <div id='speaker-box-title' class='switch-item switch-unselected' onclick="toggleVerseSpeakerSwitch('speaker')">Speakers</div>
+                        <div id='frequency-box-title' class='switch-item switch-unselected' onclick="toggleVerseSpeakerSwitch('frequency')">Frequency</div>
+                    </div>
+                    <div id='verse-speaker-content'>
+                        <div class='verse-container visible' id='verse-container'></div>
+                        <div class='speaker-container hidden' id='speaker-container'>
+                            <div class='bar-graph-description'>Number for each speaker represents how many times they use the current word or phrase.</div>
+                            <div class='speaker-container-flex' id='speaker-container-flex'></div>
+                        </div>
+                        <div class='frequency-container hidden' id='frequency-container'>
+                            <div class='bar-graph-description' id='frequency-graph-description'>Frequency Chart - Each bar represents a block of verses. The height is how many times the selected word or phrase is used in each section of verses.</div>
+                            <div class='frequency-graph' id='frequency-graph'></div>
+                        </div>
+                    </div>
+                </div>
+                <div id='drag-bar' class='drag-bar'>
+                    <div class='drag-icon-1'></div>
+                    <div class='drag-icon-2'></div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class='tooltip tooltip-hidden' id='tooltip'>Tooltip</div>
+        <div class='helpbox-sheet hidden' id='helpbox-sheet'>
+            <div class='helpbox'>
+                <div onclick="displayHelpBox()" class="help-exit" id='help-exit'>X</div>
+                <div class='helpbox-title'>Help</div>
+                <div class='helpbox-content'>
+                    <div class="helpbox-text">Don't have Word Cruncher? Try out this tool with these pre-generated files!</div>
+                    <div class='link-box'>
+                        <div class='text-link' onclick="loadfile('trust_export.txt')">Trust</div>
+                        <div class='text-link' onclick="loadfile('obedience_export.txt')">Obedience</div>
+                        <div class='text-link' onclick="loadfile('faith_export.txt')">Faith</div>
+                        <div class='text-link' onclick="loadfile('war_export.txt')">War</div>
+                        <div class='text-link' onclick="loadfile('jesus_export.txt')">Jesus</div>
+                    </div>
+
+                    <div class='help-step'><div class='help-step-text'>1</div></div>
+                    <div class="helpbox-text">This program is designed to export data from the Word Cruncher Book <em>Book of Mormon With Voices Identified</em> by John Hilton III and other authors. Download this text to export data from and upload to this program.</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/book_for_download.png" alt="Image" class='helpbox-image'>
+                    </div>
+
+                    <div class='help-step'><div class='help-step-text'>2</div></div>
+                    <div class="helpbox-text">Once you have the book uploaded, start a new search by clicking the search button or pressing the space bar.</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/select_search.png" alt="Image" class='helpbox-image'>
+                    </div>
+
+                    <div class='help-step'><div class='help-step-text'>3</div></div>
+                    <div class="helpbox-text">Enter your word in the search bar and press the "Go" button or the enter key.</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/enter_search.png" alt="Image" class='helpbox-image'>
+                    </div>
+
+                    <div class='help-step'><div class='help-step-text'>4</div></div>
+                    <div class="helpbox-text">Once the results are on the screen, select the Neighborhood Collocation Chart tool near the top-right of the page.</div>
+                    <div class='helpbox-image-container image-no-margin-bottom'>
+                        <img src="help_images/select_neighborhood.png" alt="Image" class='helpbox-image'>
+                    </div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/neighboorhood_zoom.png" alt="Image" class='helpbox-image'>
+                    </div>
+
+                    <div class='help-step'><div class='help-step-text'>5</div></div>
+                    <div class="helpbox-text">The results for the Neighborhood Collocation will appear on screen. Switch to the second tab titled "Neighborhoods (KWIC)".</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/switch_neighborhood_tab.png" alt="Image" class='helpbox-image'>
+                    </div>
+
+                    <div class='help-step'><div class='help-step-text'>6</div></div>
+                    <div class="helpbox-text">Right click anywhere on the results table and select "Export all (Neighborhoods)".</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/right_click.png" alt="Image" class='helpbox-image'>
+                    </div>
+
+                    <div class='help-step'><div class='help-step-text'>7</div></div>
+                    <div class="helpbox-text">Export as .txt file so the program can read and display the results. 
+                        As of right now, this tool is not designed to read in .csv files, only .txt files.</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/export_txt.png" alt="Image" class='helpbox-image'>
+                    </div>
+                    <div class='help-step'><div class='help-step-text'>8</div></div>
+                    <div class="helpbox-text">Now that you have your file to upload, select the "Choose File" 
+                        button at the top of the screen and select the file you saved in the previous steps.</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/choose_file.png" alt="Image" class='helpbox-image'>
+                    </div>
+
+                    <div class='help-step'><div class='help-step-text'>9</div></div>
+                    <div class="helpbox-text">If uploaded, the name of your file will appear on the screen. Click 
+                        the "Go" button and your results will be displayed on the screen.</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/select_go.png" alt="Image" class='helpbox-image'>
+                    </div>
+                    <div class='help-step'><div class='help-step-text'>10</div></div>
+                    <div class="helpbox-text">Example final graphic for an export on the word "faith".</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/final_graphic.png" alt="Image" class='helpbox-image'>
+                    </div>
+
+                    <div class='help-step'><div class='help-step-text'>11</div></div>
+                    <div class="helpbox-text">You can change search preferences on Word Cruncher for how many words 
+                        will be included before and after your search word. The files included at the top of this 
+                        box are of length 5 before and 5 after.</div>
+                    <div class='helpbox-image-container'>
+                        <img src="help_images/change_preferences.png" alt="Image" class='helpbox-image'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src='utilities.js'></script>
+    <script src='verseData.js'></script>
+    <script src='script.js'></script>
+</body>
+</html>
